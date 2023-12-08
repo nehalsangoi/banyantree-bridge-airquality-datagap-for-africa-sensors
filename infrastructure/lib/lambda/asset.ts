@@ -75,12 +75,11 @@ const getUploadURL = async function (event: APIGatewayProxyEvent) {
     }
   } else {
     console.log
-    const apiRequestId = event.requestContext.requestId;
     const uploadFOlder = process.env.UPLOAD_FOLDER || "raw/";
     const filename = event.queryStringParameters?.filename || "tempfile";
     const contentType = event.queryStringParameters?.contentType;
     const timestamp = Math.floor(Date.now() / 1000);
-    const s3Key = `${uploadFOlder}${timestamp}-${filename}-${apiRequestId}.${contentType}`;
+    const s3Key = `${uploadFOlder}${timestamp}-${filename}`;
 
     // Get signed URL from S3
     const putObjectParams = {
@@ -173,8 +172,8 @@ const getAllFiles = async function (event: APIGatewayProxyEvent) {
 };
 
 const getSignedURL = async function (key: string) {
-
-  const s3Key = `raw/${key}`;
+  const prefix =  process.env.DOWNLOAD_FOLDER;
+  const s3Key = `${prefix}${key}`;
   const getObjectParams = {
     Bucket: process.env.UPLOAD_BUCKET,
     Key: s3Key,
@@ -194,8 +193,8 @@ const getSignedURL = async function (key: string) {
 };
 
 const getSignedURLString = async function (key: string) {
-
-  const s3Key = `raw/${key}`;
+  const prefix =  process.env.DOWNLOAD_FOLDER;
+  const s3Key = `${prefix}${key}`;
   const getObjectParams = {
     Bucket: process.env.UPLOAD_BUCKET,
     Key: s3Key,
