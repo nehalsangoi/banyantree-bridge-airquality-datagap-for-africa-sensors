@@ -1,0 +1,19 @@
+{
+  "name": "lambda-handlers",
+  "version": "0.0.0",
+  "description": "Code for all lambda handlers",
+  "scripts": {
+    "build": "tsc",
+    "package": "npm install && npm run build",
+    "clean": "rm -rf node_modules && rm */*.d.ts && rm */*.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "*"
+  },
+  "dependencies": {
+    "axios": "*",
+    "es-mime-types": "^0.1.4"
+  }
+}
